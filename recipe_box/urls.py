@@ -26,5 +26,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('myitem/<int:id>/', views.details),
-    path('myauthor/<str:id>/', views.auth_deets)
+    path('myauthor/<str:name>/', views.auth_deets)
 ]

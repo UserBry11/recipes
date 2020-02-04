@@ -13,9 +13,16 @@ def index(request):
 def details(request, id):
     item = Recipe.objects.get(id=id)
 
-    return render(request, 'details.html', {'item': item})
+    return render(request, 'recipe_details.html', {'item': item})
+
+# integer or instance itself. Need pass someth;ing useful
+# foreign key pointing to anothre model. Use __method
 
 
-def auth_deets(request, description):
-    item = Recipe.objects.get(description=description)
-    return render(request, 'author.html', {'tree': "item"})
+def auth_deets(request, name):
+    item = Recipe.objects.filter(author__name=name)
+    return render(request, 'author.html',
+                  {
+                    'authDeets': item,
+                    'authName': name
+                  })
