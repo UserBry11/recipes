@@ -1,0 +1,6 @@
+<h4>This is a Submit Recipe Form</h4>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ formKey.as_p }}
+    <input type="submit" value="Submit">
+</form>
