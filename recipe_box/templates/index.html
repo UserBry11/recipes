@@ -1,6 +1,6 @@
 <html style="background-color: rgb(207, 211, 211);">
     <style type="text/css">
-        h1 {
+        h1, h2 {
             text-align: center;
         }
         #wrap {
@@ -20,6 +20,17 @@
 
 
     <h1>Homepage: Recipes by Chefs!</h1>
+    <h2>
+        {% if user.is_authenticated %}
+            Welcome home, {{request.user}}! <br>Wanna <a href="http://localhost:8000/logout/"><button>Log outta</button></a> here?
+        {% else %}
+            Welcome Home, [Guest User] <a href="login/"><button>Login Here</button></a>
+                 or 
+                <a href="signup/"><button>Signup Here</button></a>
+            <p></p>
+        {% endif %}
+    </h2>
+
 
     <div id="wrap">
         <section id="left_col">
@@ -41,7 +52,6 @@
             <div>
                 <a href="/addauthor/" style="background-color: rgb(82, 206, 206);">Add Another Author?</a>
             </div>
-    
         </section>
 
 

@@ -28,5 +28,8 @@ urlpatterns = [
     path('myitem/<int:id>/', views.details),
     path('myauthor/<str:name>/', views.auth_deets),
     path('addrecipe/', views.add_recipe),
-    path('addauthor/', views.add_author)
+    path('addauthor/', views.add_author),
+    path('signup/', views.signup_view),
+    path('login/', views.login_view),
+    path('logout/', views.logout_view)
 ]
