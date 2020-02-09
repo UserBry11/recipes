@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
-from django.contrib import messages
-
 
 def index(request):
     items = Recipe.objects.all()
@@ -45,7 +43,6 @@ def add_recipe(request):
             Recipe.objects.create(
                 title=data['title'],
                 author=data['author'],
-                # author=Author.objects.filter(id=data['author']).first(),
                 description=data['description'],
                 time_required=data['time_required'],
                 instructions=data['instructions']
@@ -65,8 +62,6 @@ def signup_view(request):
 
         if form.is_valid():
             data = form.cleaned_data
-
-            # messages.success(request, "{}".format(data['username']))
 
             user = User.objects.create_user(
                 data['username'],

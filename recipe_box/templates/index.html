@@ -22,7 +22,12 @@
     <h1>Homepage: Recipes by Chefs!</h1>
     <h2>
         {% if user.is_authenticated %}
-            Welcome home, {{request.user}}! <br>Wanna <a href="http://localhost:8000/logout/"><button>Log outta</button></a> here?
+            Welcome home, 
+            {% if request.user.is_staff %}
+                ADMIN:  
+            {% endif %}
+            "{{request.user}}"
+            <br>Wanna <a href="http://localhost:8000/logout/"><button>Log outta</button></a> here?
         {% else %}
             Welcome Home, [Guest User] <a href="login/"><button>Login Here</button></a>
                  or 
@@ -48,10 +53,14 @@
             <div>
                 <a href="/addrecipe/" style="background-color: rgb(82, 206, 206);">Add Another Recipe?</a>
             </div>
-            <br>or maybe...
-            <div>
-                <a href="/addauthor/" style="background-color: rgb(82, 206, 206);">Add Another Author?</a>
-            </div>
+
+            {% if request.user.is_staff %}
+                <br>or maybe...
+                    <p>
+                        <a href="/addauthor/" style="background-color: rgb(82, 206, 206);">Add Another Author?</a>
+                    </p>
+            {% endif %}
+
         </section>
 
 
