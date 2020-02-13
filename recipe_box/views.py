@@ -40,6 +40,7 @@ def add_recipe(request):
 # Contains everythong POSTed from user
         if form.is_valid():
             data = form.cleaned_data
+
             Recipe.objects.create(
                 title=data['title'],
                 author=data['author'],
@@ -47,6 +48,7 @@ def add_recipe(request):
                 time_required=data['time_required'],
                 instructions=data['instructions']
             )
+
             return HttpResponseRedirect(reverse("homepage"))
 
     form = AddRecipe()
