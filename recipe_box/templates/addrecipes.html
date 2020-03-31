@@ -11,6 +11,10 @@
     {% else %}
         {{request.user}}
     {% endif %}
+
+    {% if not request.user.is_staff %}
+        <div>Can only be authored as yourself</div>
+    {% endif %}
         <form action="" method="POST">
             {% csrf_token %}
             {{ formKey.as_p}}
