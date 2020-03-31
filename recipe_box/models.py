@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     bio = models.TextField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # back populate with something

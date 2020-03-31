@@ -16,7 +16,7 @@ class AddAuthor(forms.ModelForm):
     # So we just define one thing with class
     class Meta:
         model = Author  # Base of Author
-        fields = ['name', 'bio']
+        fields = ['name', 'bio', 'user']
 
 
 class SignupForm(forms.Form):

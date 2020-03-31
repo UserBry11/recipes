@@ -5,6 +5,7 @@ from recipe_box.forms import AddRecipe, AddAuthor, SignupForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def index(request):
@@ -34,16 +35,35 @@ def auth_deets(request, name):
 def add_recipe(request):
     html = "addrecipes.html"
 
+    if request.user.is_staff:
+        try:
+            Author.objects.get(name=request.user)
+        except Author.DoesNotExist:
+            Author.objects.create(
+                name=request.user,
+                bio='',
+                user=request.user
+            )
+
     if request.method == "POST":
         form = AddRecipe(request.POST)
-# Data from request.POST is added to TakeData() container.
-# Contains everythong POSTed from user
+
         if form.is_valid():
             data = form.cleaned_data
 
+            if request.user.is_staff:
+                author_user = Author.objects.get(user__username=data['author'])
+                # obj, created = Author.objects.get_or_create(
+                #     name=data['author'],
+                #     user=request.user,
+            #         defaults={'birthday': date(1940, 10, 9)},
+                # )
+            else:
+                author_user = Author.objects.get(user=request.user)
+
             Recipe.objects.create(
                 title=data['title'],
-                author=data['author'],
+                author=author_user,
                 description=data['description'],
                 time_required=data['time_required'],
                 instructions=data['instructions']
@@ -56,6 +76,7 @@ def add_recipe(request):
     return render(request, html, {'formKey': form})
 
 
+@staff_member_required()
 def signup_view(request):
     html = "signup.html"
 
@@ -71,7 +92,7 @@ def signup_view(request):
                 data['password'],
             )
 
-            login(request, user)
+            # login(request, user)
             Author.objects.create(
                 name=data['username'],
                 user=user
@@ -107,13 +128,20 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("homepage"))
 
 
+@staff_member_required()
 def add_author(request):
     html = 'addauthors.html'
 
     if request.method == 'POST':
         form = AddAuthor(request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse("homepage"))
+        if form.is_valid():
+            data = form.cleaned_data
+            Author.objects.create(
+                name=data['username'],
+                bio=data['bio'],
+                user=data['user']
+            )
+            return HttpResponseRedirect(reverse("homepage"))
 
     form = AddAuthor()
 
