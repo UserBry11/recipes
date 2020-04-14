@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&6krf%=v2(si!!xx*2og49$ue(^ntbs_gc+#oubctlxs*5lh&u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['recipe-box-1234.herokuapp.com', 'localhost']
 
 
 # Application definition

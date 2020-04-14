@@ -1,0 +1,1 @@
+web: gunicorn recipe_box.wsgi --log-file -
